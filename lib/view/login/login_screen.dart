@@ -84,8 +84,28 @@ class LoginScreen extends StatelessWidget {
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                   decoration: InputDecoration(
+                    hintText: 'password_hint'.tr,
+                    hintStyle: AppFonts.gabaritoRegular.copyWith(
+                        fontSize: 18, color: AppColors.inputFieldBorder),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: AppColors.errorColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: AppColors.primaryColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: AppColors.inputFieldBorder),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: AppColors.errorColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
