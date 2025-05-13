@@ -84,7 +84,11 @@ class LoginScreen extends StatelessWidget {
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
-                   decoration: InputDecoration(
+                  decoration: InputDecoration(
+                    suffixIcon: const Icon(
+                      Icons.visibility_outlined,
+                      color: AppColors.inputFieldBorder,
+                    ),
                     hintText: 'password_hint'.tr,
                     hintStyle: AppFonts.gabaritoRegular.copyWith(
                         fontSize: 18, color: AppColors.inputFieldBorder),
@@ -120,21 +124,30 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 40),
 
                 // Submit Button
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Step 3: Validate on submit
-                      if (_formKey.currentState!.validate()) {
-                        // Success
-                        Get.snackbar("Success", "Form is valid");
-                      }
-                    },
-                    child: Text(
-                      "Login",
-                      style: AppFonts.gabaritoBold,
+
+                GestureDetector(
+                  onTap: () {
+                    // Step 3: Validate on submit
+                    if (_formKey.currentState!.validate()) {
+                      // Success
+                      Get.snackbar("Success", "Form is valid");
+                    }
+                  },
+                  child: Container(
+                    height: 45,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: Text(
+                        "Login",
+                        style: AppFonts.gabaritoRegular.copyWith(
+                            fontSize: 16, color: AppColors.backgroundColor),
+                      ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
