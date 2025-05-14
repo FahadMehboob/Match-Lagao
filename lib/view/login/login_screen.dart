@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:match_lagao/res/app_colors/app_colors.dart';
 import 'package:match_lagao/res/fonts/app_fonts.dart';
+import 'package:match_lagao/utils/utils.dart';
+import 'package:match_lagao/view_model/controllers/login/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   // Step 1: Form key
   final _formKey = GlobalKey<FormState>();
-
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,35 +39,29 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
-                  controller: emailController,
+                  controller: controller.emailController.value,
+                  focusNode: controller.emailFocusNode.value,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (value) {
+                    Utils.fieldFocusChange(
+                        context,
+                        controller.emailFocusNode.value,
+                        controller.passwordFocusNode.value);
+                  },
                   decoration: InputDecoration(
                     hintText: 'email_hint'.tr,
                     hintStyle: AppFonts.gabaritoRegular.copyWith(
                         fontSize: 18, color: AppColors.inputFieldBorder),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.errorColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: AppColors.primaryColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: AppColors.inputFieldBorder),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.errorColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    focusedErrorBorder: Utils.errorBorder,
+                    focusedBorder: Utils.focusedBorder,
+                    enabledBorder: Utils.enabledBorder,
+                    errorBorder: Utils.errorBorder,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'email_error'.tr;
                     } else if (!value.contains('@')) {
-                      return 'Enter a valid email';
+                      return 'invalid_email'.tr;
                     }
                     return null;
                   },
@@ -81,50 +75,70 @@ class LoginScreen extends StatelessWidget {
                   style: AppFonts.gabaritoRegular.copyWith(fontSize: 18),
                 ),
                 const SizedBox(height: 8),
-                TextFormField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    suffixIcon: const Icon(
-                      Icons.visibility_outlined,
-                      color: AppColors.inputFieldBorder,
+                Obx(
+                  () => TextFormField(
+                    controller: controller.passwordController.value,
+                    focusNode: controller.passwordFocusNode.value,
+                    onFieldSubmitted: (value) {
+                      Utils.fieldFocusChange(
+                          context,
+                          controller.passwordFocusNode.value,
+                          controller.passwordFocusNode.value);
+                    },
+                    obscureText: controller.obsecureText.value,
+                    decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          controller.obsecure();
+                        },
+                        child: controller.obsecureText.value
+                            ? const Icon(
+                                Icons.visibility_off_outlined,
+                                color: AppColors.inputFieldBorder,
+                              )
+                            : const Icon(
+                                Icons.visibility_outlined,
+                                color: AppColors.textColor,
+                              ),
+                      ),
+                      hintText: 'password_hint'.tr,
+                      hintStyle: AppFonts.gabaritoRegular.copyWith(
+                          fontSize: 18, color: AppColors.inputFieldBorder),
+                      focusedErrorBorder: Utils.errorBorder,
+                      focusedBorder: Utils.focusedBorder,
+                      enabledBorder: Utils.enabledBorder,
+                      errorBorder: Utils.errorBorder,
                     ),
-                    hintText: 'password_hint'.tr,
-                    hintStyle: AppFonts.gabaritoRegular.copyWith(
-                        fontSize: 18, color: AppColors.inputFieldBorder),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.errorColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: AppColors.primaryColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: AppColors.inputFieldBorder),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.errorColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'password_error'.tr;
+                      } else if (value.length < 6) {
+                        return 'invalid_password'.tr;
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    } else if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Forgot Password?",
+                      style: AppFonts.gabaritoRegular.copyWith(
+                          color: AppColors.accentColor,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.accentColor),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 40),
 
                 // Submit Button
-
                 GestureDetector(
                   onTap: () {
                     // Step 3: Validate on submit
