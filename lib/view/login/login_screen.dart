@@ -5,6 +5,8 @@ import 'package:match_lagao/res/fonts/app_fonts.dart';
 import 'package:match_lagao/utils/utils.dart';
 import 'package:match_lagao/view_model/controllers/login/login_controller.dart';
 
+import '../../components/round_button.dart';
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
@@ -139,29 +141,16 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 40),
 
                 // Submit Button
-                GestureDetector(
-                  onTap: () {
-                    // Step 3: Validate on submit
+                RoundButton(
+                  title: 'login'.tr,
+                  onPress: () {
                     if (_formKey.currentState!.validate()) {
-                      // Success
-                      Get.snackbar("Success", "Form is valid");
+                      Utils.snackBar('Success', 'Form Submitted');
                     }
                   },
-                  child: Container(
-                    height: 45,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                      child: Text(
-                        "Login",
-                        style: AppFonts.gabaritoRegular.copyWith(
-                            fontSize: 16, color: AppColors.backgroundColor),
-                      ),
-                    ),
-                  ),
-                )
+                ),
+                const Spacer(),
+                Text.rich(TextSpan(text: 'login'.tr))
               ],
             ),
           ),
