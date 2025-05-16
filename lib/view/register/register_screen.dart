@@ -9,8 +9,8 @@ import 'package:match_lagao/view_model/controllers/login/login_controller.dart';
 
 import '../../components/round_button.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
 
   // Step 1: Form key
   final _formKey = GlobalKey<FormState>();
@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(height: Get.height * .15),
                         Center(
                           child: Text(
-                            "login".tr,
+                            "register".tr,
                             style: AppFonts.gabaritoBold.copyWith(fontSize: 30),
                           ),
                         ),
@@ -179,7 +179,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Get.toNamed(RoutesName.registerScreen);
+                              Get.toNamed(RoutesName.loginScreen);
                             },
                         ),
                       ],

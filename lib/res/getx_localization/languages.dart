@@ -9,6 +9,7 @@ class Languages extends Translations {
           'email_error': 'Please enter your email',
           'invalid_email': 'Enter a valid email',
           'login': "Login",
+          'register': "Register",
           'password': "Password",
           'password_hint': 'Enter your password',
           'password_error': 'Please enter your password',
