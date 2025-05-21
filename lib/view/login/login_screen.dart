@@ -165,14 +165,14 @@ class LoginScreen extends StatelessWidget {
                 child: Center(
                   child: RichText(
                     text: TextSpan(
-                      text: "Don't have an account? ",
+                      text: "dont_have_account".tr,
                       style: AppFonts.gabaritoRegular.copyWith(
                         color: AppColors.textColor,
                         fontSize: 16,
                       ),
                       children: [
                         TextSpan(
-                          text: 'Sign up',
+                          text: 'sign_up'.tr,
                           style: AppFonts.gabaritoRegular.copyWith(
                             color: AppColors.accentColor,
                             decoration: TextDecoration.underline,
