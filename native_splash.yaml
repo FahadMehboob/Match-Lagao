@@ -3,7 +3,11 @@ flutter_native_splash:
   ios: true
   web: false
 
-  color: "#94A3B8"
-  android_12: 
-    color: "#94A3B8"
-    image: "assets/images/logo.png"
+  color: "#1E293B" # Background color
+
+  image: assets/images/logo.png # For older Android & iOS
+
+  android_12:
+    color: "#1E293B" # Background color for Android 12+
+    image: assets/images/logo.png
+    branding: assets/images/branding.png # (Optional small bottom image like "Powered by")
